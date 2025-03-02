@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>Result: True</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/resultStyle.css')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 class="true">TRUE</h1>
+    
+            {% if prediction %}
+                <div class="result {% if prediction == 'Fake News' %}fake{% else %}real{% endif %}">
+                    <p>Prediction: <strong>{{ prediction }}</strong></p>
+                    <p>Confidence: {{ confidence }}%</p>
+                    
+                    <p class="explanation">🧐 <strong>Explanation:</strong> {{ explanation if explanation else "No explanation provided." }}</p>
+                </div>
+            {% endif %}
+    
+            <h2>How to Verify News:</h2>
+            <ul>
+                <li>Check the source: Ensure the source of the news is credible.</li>
+                <li>Cross-reference: Verify the news with multiple reliable sources.</li>
+                <li>Look for evidence: Check for evidence such as quotes, statistics, or official statements.</li>
+                <li>Beware of sensationalism: If the headline seems too good to be true, it probably is.</li>
+            </ul>
+    
+            <p class="thank-you">Thank you for using our fake news detector. Stay informed and always verify your news!</p>
+        </div>
+    </body>
+</html>

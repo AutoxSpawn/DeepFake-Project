@@ -87,6 +87,9 @@ def detect_fake_news(text):
         "Explanation": gpt_explanation
     }
 
+#############################################################################################################
+app = Flask(__name__, template_folder="Website/templates", static_folder="Website/static")
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     """Webpage for Fake News Detection (Supports Text and URLs)."""
@@ -98,17 +101,21 @@ def home():
             extracted_text = extract_text_from_url(url)
             if extracted_text:
                 result = detect_fake_news(extracted_text)
-                return render_template("index.html", prediction=result["Prediction"], confidence=result["Confidence"], text=extracted_text, explanation=result["Explanation"], url=url)
+                return render_template("home.html", prediction=result["Prediction"], confidence=result["Confidence"], text=extracted_text, explanation=result["Explanation"], url=url)
             else:
-                return render_template("index.html", error="Could not extract text from the URL.", url=url)
+                return render_template("home.html", error="Could not extract text from the URL.", url=url)
 
         if text:  # If text is provided, analyze it
             result = detect_fake_news(text)
-            return render_template("index.html", prediction=result["Prediction"], confidence=result["Confidence"], text=text, explanation=result["Explanation"])
+            return render_template("home.html", prediction=result["Prediction"], confidence=result["Confidence"], text=text, explanation=result["Explanation"])
 
-        return render_template("index.html", error="Please enter news text or a URL.")
+        return render_template("home.html", error="Please enter news text or a URL.")
 
-    return render_template("index.html", prediction=None)
+    return render_template("home.html", prediction=None)
+
+@app.route("/loading")
+def loading():
+    return render_template("loading.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
